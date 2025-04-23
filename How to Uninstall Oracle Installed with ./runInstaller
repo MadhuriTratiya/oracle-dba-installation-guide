@@ -1,0 +1,55 @@
+How to Uninstall Oracle Installed with ./runInstaller
+
+🔁 1. Run the Oracle Universal Installer in Uninstall Mode
+
+$ORACLE_HOME/deinstall/deinstall
+
+Or if that doesn't exist:
+
+$ORACLE_HOME/oui/bin/runInstaller -deinstall -home $ORACLE_HOME
+
+This is the cleanest and safest way. It will remove Oracle binaries and update system files.
+
+🧼 2. Manually Remove Leftover Files (if needed)
+a. Remove Oracle Inventory (optional, if no other Oracle homes exist):
+rm -rf /u01/app/oraInventory
+
+b. Remove Oracle Home directory:
+rm -rf $ORACLE_HOME
+
+Example:
+rm -rf /u01/app/oracle/product/19.0.0/dbhome_1
+
+c. Remove Oracle Base (if you want everything gone):
+rm -rf /u01/app/oracle
+
+
+🧾 3. Remove Entries from /etc/oraInst.loc and /etc/oratab (Optional)
+vi /etc/oratab
+
+Delete any lines related to your Oracle SID.
+vi /etc/oraInst.loc
+
+Delete or comment out if no longer used.
+
+⚠️ Be Super Careful with rm -rf
+Before running any rm -rf command, double-check you're not deleting system folders or anything unrelated to Oracle.
+Use ls first:
+ls /u01/app/oracle/product/
+
+
+✅ Final Cleanup Checklist
+Task
+Command
+Run Oracle deinstaller
+$ORACLE_HOME/deinstall/deinstall
+Delete Oracle Home
+rm -rf $ORACLE_HOME
+Delete Oracle Base (optional)
+rm -rf $ORACLE_BASE
+Delete Oracle Inventory (if no other homes)
+rm -rf /u01/app/oraInventory
+Clean up /etc/oratab and /etc/oraInst.loc
+Manual edit
+
+
