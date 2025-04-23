@@ -1,0 +1,173 @@
+
+
+1.DOWNLOAD
+
+VMBox
+Oracle Linux [ oracle linux 19c]
+Oracle Database
+
+2. CREATE VMBOX
+
+Name and Operating System
+New
+Give name (ex. madhuri_VM)
+Create folder in any drive and select that blank folder
+Check skip unattended installation
+[ If not check skip unattended mode installation so start installation in dos mode and not showing GUI process.]
+Hardware
+	Base Memory Size : 4000MB
+	
+HardDisk
+	Hard Disk Size : Minimum 50G	maximum 100G to 150G
+Click on finish
+
+3. INSTALLATION of LINUX
+
+Click on machine to start
+Enter
+Installation process Running (Scan Disk)
+Click on continue
+Click on continue
+Accept license
+Set date & Time
+Select Disk
+Login as root user after installation
+Menu -> go to device -> go to share folder
+Setting -> select First(+)button -> click dropdown -> other -> go to drive(create a new folder where (LINUX.X64_193000_db_home) unzip file placed. (SELECT FOLDER)
+Check automount & Make paranent  -> OK -> OK
+Copy from window to linux and linux to window  
+Go to device -> insert guest addition CD image -> click (RUN) -> click (CAPTURE) 
+Click (ENTER) [IT WILL TAKE TIME]
+
+Device -> shared device -> [1] check clipboard [2] check Bidirectional [
+Check screen zoom in or out ? [Checking bidirectional connectivity when installing Oracle Linux (or any Linux distribution, really) is important if your system is part of a network — especially in enterprise environments like data centers, cloud deployments, or clustered systems.]
+
+	Open terminal and type
+	pwd (Check present working directory)
+	Init 6 / init 0(RESTART SERVER)
+Login as root user to install oracle app
+Su (Switch User)
+Su - root
+
+4. SET PREREQUISITE FOR INSTALLATION OF ORACLE 
+
+
+Yum list oracle* (copy database oracle-database preinstall19c)
+yum install oracle*
+(if above command not running 
+Ps -ef | grep yum (Process Status)
+Kill -9 (shutdown server)
+Check network
+Ping google.com
+Copy oracle - database preinstall -19c x86 64
+yum  oracle - database preinstall -19c x86 64
+[Above command install oracle and create oracle user]
+passwd oracle [reset or change password]
+	[set oracle user password]
+	[set password : oracle
+	retype : oracle]
+Create directory path
+	Mkdir -p /u01/app/oracle/product/19.0.0/dbhome_1
+Cd past /u01…..
+Pwd
+Unzip /media/sf_software/LINUX.x64_193000_db_home.zip
+chmod -R 755 /u01 (CHANGE OWNER - permission)
+vi /etc/Selinux/config
+	[ inside file change the SELINUX = enforcing = “permissive”
+Esc+i [insert mode]
+Esc+ :wq [save & exit]
+Init 6 [ Restart Server]
+Chown -R oracle:oinstall /u01
+init 6
+ls -l / (CHECk u01 DIRECTORY OWN BY ORACLE OR NOT)
+	
+5. INSTALLATION OF ORACLE
+
+Login with root user
+Cd /u01/app/oracle/product/19.0.0/dbhome_1
+./runInstaller 	[installing oracle application]
+Select set up software only -> next ->next ->next ->next ->next ->next ->Install
+Right click on desktop and open new terminal 
+Su - root
+Password : oracle
+Execute configuration box
+Go to 1st script press ctrl+D
+Go to terminal of root press shift+ctr+v
+Esc :q
+Go to 2nd script press ctrl + cd
+Click on “OK” and “CLOSE”
+Close root terminal
+
+6. CREATE DATABASE
+
+cd /u01/app/oracle/product/19.0.0/dbhome_1/
+cd bin
+./dbca
+Click
+Select “Advance configuration”
+Next
+Global database name : prod
+UNCHECK create container database
+Select “use for database storaget attribute”
+Next
+Check both box 
+Next
+Next
+Next
+Go to sample schema
+Check
+Next
+Next
+Tap yes | click
+Choss 2nd option
+Password : oracle
+Confirm password : oracle
+Next
+Tap yes
+Next
+finish
+SUMMARY OF DB CREATION
+Database Configuration Assistant
+Global Settings
+Global database name: prod
+Configuration type: Oracle Single Instance database
+SID: prod
+Create as Container database: No
+Database Files Storage Type: File System
+Memory Configuration Type: Automatic Memory Management
+Template name: General Purpose
+Initialization Parameters
+audit_file_dest: {ORACLE_BASE}/admin/{DB_UNIQUE_NAME}/adump
+audit_trail: db
+compatible: 19.0.0
+db_block_size: 8192 BYTES
+db_create_file_dest: {ORACLE_BASE}/oradata/{DB_UNIQUE_NAME}/
+db_name: prod
+db_recovery_file_dest: {ORACLE_BASE}/fast_recovery_area/{DB_UNIQUE_NAME}
+db_recovery_file_dest_size: 8256 MB
+diagnostic_dest: {ORACLE_BASE}
+dispatchers: (PROTOCOL=TCP) (SERVICE=prodXDB)
+log_archive_format: %t_%s_%r.dbf
+memory_target: 1419 MB
+nls_language: AMERICAN
+nls_territory: AMERICA
+open_cursors: 300
+processes: 300
+remote_login_passwordfile: EXCLUSIVE
+undo_tablespace: UNDOTBS1
+Character sets
+Database character set: AL32UTF8
+National character set: AL16UTF16
+Data Files
+File: (OMF_SYSAUX_DATAFILE), Tablespace - SYSAUX, Size(M) - 400
+File: (OMF_SYSTEM_DATAFILE), Tablespace - SYSTEM, Size(M) - 880
+File: (OMF_UNDOTBS1_DATAFILE), Tablespace - UNDOTBS1, Size(M) - 25
+File: (OMF_USERS_DATAFILE), Tablespace - USERS, Size(M) - 5
+Control Files
+File: {ORACLE_BASE}/oradata/{DB_UNIQUE_NAME}/control01.ctl
+File: {ORACLE_BASE}/fast_recovery_area/{DB_UNIQUE_NAME}/control02.ctl
+Redo Log Groups
+Group 1, File - (OMF_1_REDOLOG_MEMBER_0), Size(K): 204800
+Group 2, File - (OMF_2_REDOLOG_MEMBER_0), Size(K): 204800
+Group 3, File - (OMF_3_REDOLOG_MEMBER_0), Size(K): 204800 
+
